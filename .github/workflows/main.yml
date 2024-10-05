@@ -1,0 +1,40 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+    
+      - name: Install dependencies
+        run: |
+            cd code/server/
+            npm install
+
+      - name: Test and coverage (unit)
+        run: |
+            cd code/server/ 
+            npm run test_unit
+      - name: Test and coverage (integration)
+        run: |
+            cd code/server/ 
+            npm run test_integration
+      - name: Test and coverage (all)
+        run: |
+            cd code/server/ 
+            npm run test
